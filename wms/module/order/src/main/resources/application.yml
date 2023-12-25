@@ -1,0 +1,38 @@
+spring:
+  config:
+    import: core.yml
+  application:
+    name: trade-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.52.129:8848
+        username: nacos
+        password: nacos
+        namespace: 443409e7-d225-4d01-8e78-da4b1daced80
+server:
+  port: 8093
+  servlet:
+    context-path: /trade-service
+logging:
+  level:
+      com.yang.cloud.wms.trade.feign: debug
+seata:
+  registry:
+    type: nacos
+    nacos:
+      namespace: 443409e7-d225-4d01-8e78-da4b1daced80
+      username: nacos
+      password: nacos
+      server-addr: 192.168.52.129:8848
+  config:
+    nacos:
+      username: nacos
+      password: nacos
+      server-addr: 192.168.52.129:8848
+      namespace: 443409e7-d225-4d01-8e78-da4b1daced80
+    type: nacos
+  tx-service-group: default_tx_group
+  service:
+    vgroup-mapping:
+      default_tx_group: default

@@ -1,0 +1,16 @@
+spring:
+  config:
+    import: core.yml
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.52.129:8848
+        namespace: 443409e7-d225-4d01-8e78-da4b1daced80
+        username: nacos
+        password: nacos
+  application:
+    name: user-service
+server:
+  port: 8091
+  servlet:
+    context-path: /user-service

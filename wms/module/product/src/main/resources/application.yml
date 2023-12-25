@@ -1,0 +1,35 @@
+server:
+  servlet:
+    context-path: /product-service
+  port: 8092
+spring:
+  application:
+    name: product-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.52.129:8848
+        namespace: 443409e7-d225-4d01-8e78-da4b1daced80
+        username: nacos
+        password: nacos
+  config:
+    import: core.yml
+seata:
+  registry:
+    type: nacos
+    nacos:
+      namespace: 443409e7-d225-4d01-8e78-da4b1daced80
+      username: nacos
+      password: nacos
+      server-addr: 192.168.52.129:8848
+  config:
+    nacos:
+      username: nacos
+      password: nacos
+      server-addr: 192.168.52.129:8848
+      namespace: 443409e7-d225-4d01-8e78-da4b1daced80
+    type: nacos
+  tx-service-group: default_tx_group
+  service:
+    vgroup-mapping:
+      default_tx_group: default
