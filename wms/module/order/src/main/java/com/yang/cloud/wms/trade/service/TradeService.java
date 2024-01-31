@@ -6,4 +6,5 @@ public interface TradeService {
 
     void create(TradeCreateVo tradeCreateVo);
 
+    void createTest(TradeCreateVo tradeCreateVo);
 }

@@ -8,4 +8,6 @@ public interface StockService {
 
     Map<String, String> incrStockMore(UpdateStockMoreVo updateStockMoreVo);
     void decrStockMore(UpdateStockMoreVo updateStockMoreVo);
+
+    void decer(UpdateStockMoreVo updateStockMoreVo);
 }

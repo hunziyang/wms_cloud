@@ -92,6 +92,16 @@ public class StockServiceImpl implements StockService {
         }
     }
 
+    @Override
+    @Transactional
+    public void decer(UpdateStockMoreVo updateStockMoreVo) {
+        updateStockMoreVo.getUpdateStockVoList().forEach(updateStockVo -> stockMapper.decrStock(updateStockVo));
+        UpdateStockVo updateStockVo = updateStockMoreVo.getUpdateStockVoList().stream().findFirst().orElse(null);
+        if (updateStockVo.getProductId() == 4){
+            int i = 1/0;
+        }
+    }
+
     private String getOneScript(UpdateStockVo updateStockVo, String path) {
         DefaultRedisScript<String> defaultRedisScript = new DefaultRedisScript<>();
         defaultRedisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource(path)));

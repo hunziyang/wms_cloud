@@ -3,6 +3,7 @@ package com.yang.cloud.wms.trade.feign;
 import com.yang.cloud.wms.common.result.Result;
 import com.yang.cloud.wms.common.vo.productService.UpdateStockMoreVo;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,4 +16,7 @@ public interface ProductFeignService {
 
     @GetMapping("/anonymous/t/test")
     Result<String> test();
+
+    @PostMapping("/anonymous/t/decr")
+    Result decr(@RequestBody @Validated UpdateStockMoreVo updateStockMoreVo);
 }

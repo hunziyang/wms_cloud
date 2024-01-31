@@ -10,6 +10,7 @@ import com.yang.cloud.wms.trade.mapper.TradeDetailMapper;
 import com.yang.cloud.wms.trade.mapper.TradeMapper;
 import com.yang.cloud.wms.trade.service.TradeService;
 import com.yang.cloud.wms.trade.utils.NumberUtil;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,5 +55,27 @@ public class TradeServiceImpl implements TradeService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    @GlobalTransactional
+    public void createTest(TradeCreateVo tradeCreateVo) {
+        String number = NumberUtil.getNumber();
+        Trade trade = new Trade()
+                .setNumber(number);
+        tradeMapper.insert(trade);
+        List<UpdateStockVo> updateStockVoList = new ArrayList<>();
+        tradeCreateVo.getTradeDetailList().forEach(tradeDetailVo -> {
+            TradeDetail tradeDetail = new TradeDetail();
+            BeanUtils.copyProperties(tradeDetailVo, tradeDetail);
+            tradeDetail.setTradeId(trade.getId());
+            tradeDetailMapper.insert(tradeDetail);
+            UpdateStockVo updateStockVo = new UpdateStockVo();
+            BeanUtils.copyProperties(tradeDetailVo,updateStockVo);
+            updateStockVoList.add(updateStockVo);
+        });
+        UpdateStockMoreVo updateStockMoreVo = new UpdateStockMoreVo();
+        updateStockMoreVo.setUpdateStockVoList(updateStockVoList);
+        productFeignService.decr(updateStockMoreVo);
     }
 }
